@@ -23,8 +23,10 @@ def elbow_method():
 #optimal clusters are 7
 clusterer = KMeans(n_clusters=9).fit(X)
 clus = clusterer.fit_transform(X)
+print(clus.shape)
+print(clus[:2,:])
 classes = ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5', 'Label 6', 'Label 7', 'Label 8', 'Label 9']
 ax = plt.scatter(clus[:, 0], clus[:, 1], c=clusterer.labels_)
-plt.legend(handles=ax.legend_elements()[0], labels=classes)
-plt.title('MFCC K-means')
-plt.show()
+# plt.legend(handles=ax.legend_elements()[0], labels=classes)
+# plt.title('MFCC K-means')
+# plt.show()
