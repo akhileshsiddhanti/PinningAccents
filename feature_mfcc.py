@@ -15,6 +15,10 @@ def getMFCC(path):
     # plt.show()
     return mfcc
 
+def spectral_bw(path):
+    waveform, sampling_rate = librosa.load(path)
+    spec_bw = np.mean(librosa.feature.spectral_bandwidth(y=waveform, sr=sampling_rate),axis=1)
+    return spec_bw
 
 if __name__ == '__main__':
 
