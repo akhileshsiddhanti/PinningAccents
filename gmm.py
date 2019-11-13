@@ -4,9 +4,9 @@ import pandas as pd
 from sklearn.mixture import GaussianMixture
 from sklearn import metrics
 
-X = np.load("mfcc_dataset.npy")
-true_labels = X[:,21]
-X = X[:,:20]
+X = np.load("final_datasettop3.npy")[:,:-1]
+true_labels = X[:,173]
+X = X[:,:172]
 
 gmm = GaussianMixture(n_components=9).fit(X)
 labels = gmm.predict(X)

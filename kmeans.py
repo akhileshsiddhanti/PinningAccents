@@ -7,28 +7,14 @@ from scipy.stats import describe
 from scipy.spatial.distance import cdist
 
 
-X = np.load("mfcc_dataset.npy")[:,:-1]
-distortions = []
-def elbow_method():
-    for n_clusters in range(1,21):
-        clusterer = KMeans(n_clusters=n_clusters).fit(X)
-        clusterer.fit(X)
-        distortions.append(sum(np.min(cdist(X, clusterer.cluster_centers_,'euclidean'),axis=1)) / X.shape[0])
-    plt.plot(range(1,21), distortions, 'bx-')
-    plt.xlabel('Values of K')
-    plt.ylabel('Distortion')
-    plt.title('The Elbow Method using Distortion')
-    plt.show()
-
-X = np.load("mfcc_dataset.npy")
-true_labels = X[:,21]
-X = X[:,:20]
-
+X = np.load("final_datasettop3.npy")[:,:-1]
+true_labels = X[:,173]
+X = X[:,:172]
 clusterer = KMeans(n_clusters=9).fit(X)
 clus = clusterer.fit_transform(X)
 labels = clusterer.predict(X)
 print(metrics.v_measure_score(true_labels,labels))
-classes = ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5', 'Label 6', 'Label 7', 'Label 8', 'Label 9']
+classes = ['Label 1', 'Label 2', 'Label 3']
 ax = plt.scatter(clus[:, 0], clus[:, 1], c=clusterer.labels_)
 plt.legend(handles=ax.legend_elements()[0], labels=classes)
 plt.title('MFCC K-means')
