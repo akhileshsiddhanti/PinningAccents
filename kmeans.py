@@ -3,11 +3,11 @@ import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn import metrics
+from scipy.stats import describe
 from scipy.spatial.distance import cdist
 
 
-X = np.load("outfilemfcctop9.npy")
-X = np.transpose(X)
+X = np.load("mfcc_dataset.npy")[:,:-1]
 distortions = []
 def elbow_method():
     for n_clusters in range(1,21):
@@ -27,6 +27,6 @@ print(clus.shape)
 print(clus[:2,:])
 classes = ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5', 'Label 6', 'Label 7', 'Label 8', 'Label 9']
 ax = plt.scatter(clus[:, 0], clus[:, 1], c=clusterer.labels_)
-# plt.legend(handles=ax.legend_elements()[0], labels=classes)
-# plt.title('MFCC K-means')
-# plt.show()
+plt.legend(handles=ax.legend_elements()[0], labels=classes)
+plt.title('MFCC K-means')
+plt.show()
