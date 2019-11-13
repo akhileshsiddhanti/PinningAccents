@@ -20,11 +20,14 @@ def elbow_method():
     plt.title('The Elbow Method using Distortion')
     plt.show()
 
-#optimal clusters are 7
+X = np.load("mfcc_dataset.npy")
+true_labels = X[:,21]
+X = X[:,:20]
+
 clusterer = KMeans(n_clusters=9).fit(X)
 clus = clusterer.fit_transform(X)
-print(clus.shape)
-print(clus[:2,:])
+labels = clusterer.predict(X)
+print(metrics.v_measure_score(true_labels,labels))
 classes = ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5', 'Label 6', 'Label 7', 'Label 8', 'Label 9']
 ax = plt.scatter(clus[:, 0], clus[:, 1], c=clusterer.labels_)
 plt.legend(handles=ax.legend_elements()[0], labels=classes)

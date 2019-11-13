@@ -27,3 +27,4 @@ if __name__ == '__main__':
 
     path = "speech-accent-archive/recordings/recordings/english1.mp3"
     others = get_features(path)
+
