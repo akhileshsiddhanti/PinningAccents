@@ -27,6 +27,5 @@ if __name__ == "__main__":
     unique_accents, mapped_values = np.unique(all_accents, return_inverse=True)
     mapped_values = np.expand_dims(mapped_values, axis=1)
     final_dataset = np.hstack((all_features, mapped_values))
-    np.save('mfcc_delta_data.npy', final_dataset)
-    np.save('unique_accents_mfcc_delta.npy', unique_accents)
-    np.save('filelist_order.npy', filelist)
+    np.save('final_dataset_top3_delta.npy', final_dataset)
+    np.save('unique_accents_top3_delta.npy', unique_accents)
