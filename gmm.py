@@ -4,10 +4,13 @@ import pandas as pd
 from sklearn.mixture import GaussianMixture
 from sklearn import metrics
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.decomposition import PCA
 
-dataset = np.load("final_dataset_top3_delta.npy")
+dataset = np.load("mfcc_delta_data.npy")
 X = dataset[:,:-1]
 true_labels = dataset[:,-1]
+pca = PCA(n_components=2)
+X = pca.fit_transform(X)
 
 gmm = GaussianMixture(n_components=3).fit(X)
 labels = gmm.predict(X)
@@ -17,7 +20,7 @@ lda_transform = lda.fit_transform(X,true_labels)
 print(lda.explained_variance_ratio_)
 print(metrics.v_measure_score(true_labels,labels))
 classes = ['Label 1', 'Label 2', 'Label 3']
-ax = plt.scatter(lda_transform[:,0], lda_transform[:,1], c=labels)
-plt.legend(handles=ax.legend_elements()[0], labels=classes)
+ax = plt.scatter(lda_transform[:,0], lda_transform[:,1], c=true_labels)
+plt.legend(handles=ax.legend_elements()[0], labels=set(true_labels))
 plt.title('MFCC GaussianMixture')
 plt.show()

@@ -15,6 +15,7 @@ def get_features(path):
     mfcc = librosa.feature.mfcc(waveform,sampling_rate)
     mfcc_delta = np.mean(librosa.feature.delta(mfcc),axis=1)
     mfcc = np.mean(librosa.feature.mfcc(waveform,sampling_rate), axis=1)
+    mfcc_std = np.std(librosa.feature.mfcc(waveform,sampling_rate), axis=1)
     # chroma = np.mean(librosa.feature.chroma_stft(S=stft, sr=sampling_rate), axis=1)
     # mel = np.mean(librosa.feature.melspectrogram(waveform, sr=sampling_rate), axis=1)
     # spec_bw = np.mean(librosa.feature.spectral_bandwidth(y=waveform, sr=sampling_rate), axis=1)
@@ -22,7 +23,7 @@ def get_features(path):
     # tonnetz = np.mean(librosa.feature.tonnetz(y=librosa.effects.harmonic(waveform), sr=sampling_rate), axis=1)
 
     #features = np.hstack([mfcc, chroma, mel, spec_bw, contrast, tonnetz])
-    features = np.hstack([mfcc, mfcc_delta])
+    features = np.hstack([mfcc, mfcc_delta,mfcc_std])
     return features, accent
     # stft = np.abs(librosa.stft(waveform))
     # chroma = np.mean(librosa.feature.chroma_stft(S=stft, sr=sampling_rate), axis=1)
