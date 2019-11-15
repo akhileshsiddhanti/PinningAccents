@@ -6,7 +6,7 @@ from keras.layers import Dropout
 from keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
 
-dataset = np.load('final_dataset_mod.npy')
+dataset = np.load('final_dataset_top3_delta.npy')
 
 X = dataset[:,:-1]
 y = to_categorical(dataset[:,-1])
@@ -39,4 +39,3 @@ evaluation = model.evaluate(x_test, y_test)
 
 print (model.metrics_names)
 print (evaluation)
-
