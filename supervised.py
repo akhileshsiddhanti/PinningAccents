@@ -7,12 +7,16 @@ from keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 
+<<<<<<< HEAD
 dataset = np.load('final_dataset.npy')
 # dataset = np.load('final_dataset.npy')
 # dataset = dataset[dataset[:,-1] != 2]
 # dataset = dataset[dataset[:,-1] != 9]
 # dataset = dataset[dataset[:,-1] != 8]
 # dataset = dataset[dataset[:,-1] != 7]
+=======
+dataset = np.load('final_dataset_top9_delta.npy')
+>>>>>>> 3604996304932aabd1e299cd4e82925dd3d24a50
 
 X = dataset[:,:-1]
 y = to_categorical(dataset[:,-1])
@@ -47,8 +51,11 @@ evaluation = model.evaluate(x_test, y_test)
 
 print (model.metrics_names)
 print (evaluation)
+<<<<<<< HEAD
 
 # print (y_test,model.predict(x_test))
 # print (np.argmax(y_test),model.predict_classes(x_test))
 print (confusion_matrix(np.argmax(y_test, axis = 1), model.predict_classes(x_test)))
 
+=======
+>>>>>>> 3604996304932aabd1e299cd4e82925dd3d24a50
