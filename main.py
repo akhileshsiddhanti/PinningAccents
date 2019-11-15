@@ -14,7 +14,7 @@ r = re.compile("english*|spanish*|arabic*|mandarin*|french*|korean*|portuguese*|
 r1 = re.compile("english*|spanish*|arabic*")
 if __name__ == "__main__":
     filelist = os.listdir("speech-accent-archive/recordings/recordings")
-    filelist = list(filter(r1.match,filelist))
+    filelist = list(filter(r.match,filelist))
     pool = Pool(processes=7)
     features = pool.map(get_features, filelist)
     pool.close()
@@ -27,5 +27,5 @@ if __name__ == "__main__":
     unique_accents, mapped_values = np.unique(all_accents, return_inverse=True)
     mapped_values = np.expand_dims(mapped_values, axis=1)
     final_dataset = np.hstack((all_features, mapped_values))
-    np.save('final_dataset_top3_delta.npy', final_dataset)
-    np.save('unique_accents_top3_delta.npy', unique_accents)
+    np.save('final_dataset_top9_delta.npy', final_dataset)
+    np.save('unique_accents_top9_delta.npy', unique_accents)
