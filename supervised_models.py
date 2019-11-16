@@ -9,6 +9,8 @@ dataset = np.load('final_dataset_top3_delta.npy')
 X = dataset[:,:-1]
 y = dataset[:,-1]
 
+print(np.unique(y,return_counts=True))
+
 few_english = np.random.permutation(np.argwhere(y==1))[:ENG_SIZE]
 
 Xf = np.vstack((X[few_english][:,0,:], X[y!=1]))
