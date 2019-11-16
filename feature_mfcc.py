@@ -15,6 +15,8 @@ def get_features(path):
     mfcc = librosa.feature.mfcc(waveform,sampling_rate)
     mfcc_delta = np.mean(librosa.feature.delta(mfcc),axis=1)
     mfcc = np.mean(librosa.feature.mfcc(waveform,sampling_rate), axis=1)
+    print(mfcc)
+
 
     # Flattened samples
     # waveform, sampling_rate = librosa.load(AUDIO_PATH + path, duration=15, sr=22050)
@@ -26,7 +28,7 @@ def get_features(path):
     plt.figure()
     librosa.display.specshow(mfcc, x_axis='time')
     # plt.savefig('Images/'+path.split('.')[0])
-    plt.close()
+    # plt.close()
 
     ## Other metrics
     # stft = np.abs(librosa.stft(waveform))

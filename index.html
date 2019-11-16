@@ -26,15 +26,29 @@
 <p>We have used a subset of the <a href="https://www.kaggle.com/rtatman/speech-accent-archive"> Speech Accent Archive</a>[1], which is provided for general access to everyone on <a href="https://www.kaggle.com/">Kaggle</a>. This dataset has native and non-native speakers of English all read the same English paragraph and are carefully recorded.This dataset allows us to compare the demographic and linguistic backgrounds of the speakers in order to determine which variables are key predictors of each accent. The speech accent archive demonstrates that accents are systematic rather than merely mistaken speech.</p>
 Some fun facts about our dataset:
  <img class="data" src="data.png">
+ <p> We chose a subset of this dataset by taking the top 3 accents that have the most number of samples since all the other accents have very few samples which will bias our model. The final dataset consists of the following languages and number of samples: English (578), Spanish (162) and Arabic (102). In order to maintain the ratio of each accent in the dataset, we take a random subset of 150 English audio samples.</p>
  <h3>
  <a id="approach" class="anchor" href="#approach" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Approach</h3>
- <p>Description of approach</p>
+<p>Literature corresponding to automatic speech recognition, accent classification <a href="http://cs229.stanford.edu/proj2017/final-reports/5244230.pdf">[2]</a> or animal and bird sound classification <a href="https://digitalcommons.usu.edu/cgi/viewcontent.cgi?article=8156&context=etd">[3]</a> suggest using coefficients of the Mel Frequency Cepstrum <a href="http://practicalcryptography.com/miscellaneous/machine-learning/guide-mel-frequency-cepstral-coefficients-mfccs/">[4]</a> and similar spectograms to capture the changing frequencies in a much more robust and efficient way, similar to how the human brain understands speech. Keeping that in mind, we extract the following features from the audio samples and train the models on different combinations as explained in <a href="#Experiments">Experiments</a>. We use the audio and music processing python package called <a href="https://librosa.github.io/">Librosa</a> to process the audio signals and extract these features.</p>
+
+<ol>
+  <li> <b> Mel-frequency cepstral coefficients (MFCC):</b> MFCC coefficients model the spectral energy distribution of the power spectrum of the audio and are obtained by using Fast Fourier Transform, Mel Scale filtering and discrete consine transform. We obtain 20 such coeffcients and average them for all the frames for a given audio sample to get feature vector of length 20. </li>
+  <li> <b> Delta MFCC:</b> Delta MFCC is calculated by taking a one-step difference of the MFCC coefficients along the time axis. We also then average them along the time-frames to get a 20 length feature vector. Delta MFCC help us in capturing the temporal relations of the MFCC coefficients. </li>
+  <li> <b> Chroma STFT: </b> Chroma-STFT compute a power spectrogram of the audio signal and project it onto 12 bins that represent 12 distinct tones of the musical octave. </li>
+  <li> <b> Spectral Contrast: </b> Spectral constrast captures relative spectral charecteristics and thus captures temporal information from the audio signal in 7 features.</li>
+  <li> <b> Tonnetz: </b>Tonnetz is a feature extraction technique to capture changing pitch in a given audio signal using 6 different filters. </li>
+  <li> <b> Melspectrogram: </b> Mel-frequency analysis of an audio signal is based on human perception and uses 128 filters to focus only on certain frequency components that are most distinct in detecting the underlying audio signal.</li>
+</ol>
+
+<p>We train multiple supervised and un-supervised machine learning models in order to understand the effectiveness of different models for accent classification. The features are also normalized to have a mean of 0 and standard deviation of 1 before being used to train the models. The data is also split in to a 80%-20% train-test split using stratified sampling to ensure equal distribution of each class in the train and test splits. The trained models along with their hyperparamters are described in next section.</p>
+
+<p>We then compare the models by their accuracy in classifying each language and also provide some insights into how the data is distributed using dimensionality reduction techniques for better visualization. We also provide insights into which features are more important in classifying accents by analyzing the model parameters. All results and analysis can be found in <a href="#analysis">Results and Analysis</a>.</p>
 <h3>
-<a id="methodology" class="anchor" href="#methodology" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Methodology</h3>
-<p>Description of models</p>
+<a id="Experiments" class="anchor" href="#methodology" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Experiments</h3>
+<p>Models and their hyperparameters. Also write about experiments on different data</p>
 <h3>
-<a id="analysis" class="anchor" href="#analysis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Analysis</h3>
-<p>Some analysis</p>
+<a id="analysis" class="anchor" href="#analysis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results and Analysis</h3>
+<p>Results about accuracy and analysis.</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.gatech.edu/sratnam6/sratnam6.github.io">Pinning Accents: A Study on Accent Classifiers </a> is maintained by <a href="https://github.gatech.edu/sratnam6">sratnam6</a>.</span>
