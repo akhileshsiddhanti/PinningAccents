@@ -8,10 +8,15 @@ from scipy.spatial.distance import cdist
 from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
-dataset = np.load("final_dataset_top3_delta.npy")
+dataset = np.load("mfcc_delta_data.npy")
 print(dataset.shape)
 X = dataset[:,:-1]
 true_labels = dataset[:,-1]
+
+pca = PCA(n_components=2)
+X = pca.fit_transform(X)
+print(X.shape)
+
 clusterer = KMeans(n_clusters=3).fit(X)
 clus = clusterer.fit_transform(X)
 labels = clusterer.predict(X)
