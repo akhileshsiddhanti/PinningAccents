@@ -15,7 +15,7 @@
       <h2 class="project-tagline">CS 7641 Machine Learning Project: Akanksha, Akhilesh, Kathan, Sheryl</h2>
     </section>
 
-    <section class="main-content">
+    <section class="main-content" align="justify">
       <h3>
 <a id="problem-motivation" class="anchor" href="#problem-motivation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Problem Motivation</h3>
 <p> Accents can signify a speaker’s ethnic identity, regardless of the context or language being spoken. Personal assistants like Siri and Alexa have reach every corner of the world, and it has become important that such systems become inclusive to diversity in accents. This is one of the many cases where accent recognition systems become crucial, and our project is a small step towards that.
@@ -23,66 +23,56 @@
  <img class="siri" src="aSiriBig.jpg">
 <h3>
 <a id="data-description" class="anchor" href="#data-description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Data Description</h3>
-<p>We have used a subset of the <a href="https://www.kaggle.com/rtatman/speech-accent-archive"> Speech Accent Archive</a>[1], which is provided for general access to everyone on <a href="https://www.kaggle.com/">Kaggle</a>. This dataset has native and non-native speakers of English all read the same English paragraph and are carefully recorded.This dataset allows us to compare the demographic and linguistic backgrounds of the speakers in order to determine which variables are key predictors of each accent. The speech accent archive demonstrates that accents are systematic rather than merely mistaken speech.</p>
+<p>We have used a subset of the Speech Accent Archive<a href="https://www.kaggle.com/rtatman/speech-accent-archive"> [1]</a>, which is provided for general access to everyone on <a href="https://www.kaggle.com/">Kaggle</a>. This dataset has native and non-native speakers of English all read the same English paragraph and are carefully recorded.This dataset allows us to compare the demographic and linguistic backgrounds of the speakers in order to determine which variables are key predictors of each accent. The speech accent archive demonstrates that accents are systematic rather than merely mistaken speech.</p>
 Some fun facts about our dataset:
  <img class="data" src="data.png">
  <p> We chose a subset of this dataset by taking the top 3 accents that have the most number of samples since all the other accents have very few samples which will bias our model. The final dataset consists of the following languages and number of samples: English (578), Spanish (162) and Arabic (102). In order to maintain the ratio of each accent in the dataset, we take a random subset of 150 English audio samples.</p>
  <h3>
  <a id="approach" class="anchor" href="#approach" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Approach</h3>
-<p>Literature corresponding to automatic speech recognition, accent classification <a href="http://cs229.stanford.edu/proj2017/final-reports/5244230.pdf">[2]</a> or animal and bird sound classification <a href="https://digitalcommons.usu.edu/cgi/viewcontent.cgi?article=8156&context=etd">[3]</a> suggest using coefficients of the Mel Frequency Cepstrum <a href="http://practicalcryptography.com/miscellaneous/machine-learning/guide-mel-frequency-cepstral-coefficients-mfccs/">[4]</a> and similar spectograms to capture the changing frequencies in a much more robust and efficient way, similar to how the human brain understands speech. We use the audio and music processing python package called <a href="https://librosa.github.io/">Librosa</a> to process the audio signals and extract these features.</p>
+<p>Literature corresponding to automatic speech recognition, accent classification <a href="http://cs229.stanford.edu/proj2017/final-reports/5244230.pdf">[2]</a> or animal and bird sound classification <a href="https://digitalcommons.usu.edu/cgi/viewcontent.cgi?article=8156&context=etd">[3]</a> suggest using coefficients of the Mel Frequency Cepstrum <a href="http://practicalcryptography.com/miscellaneous/machine-learning/guide-mel-frequency-cepstral-coefficients-mfccs/">[4]</a> and similar spectograms to capture the changing frequencies in a much more robust and efficient way. We use the audio and music processing python package called <a href="https://librosa.github.io/">Librosa</a> to process the audio signals and extract these features.</p>
+<img class="waveform" src="Waveform.png">
+<p><b>Mel-frequency cepstral coefficients (MFCC)</b>: MFCC coefficients model the spectral energy distribution of the power spectrum of the audio and are obtained by using Fast Fourier Transform, Mel Scale filtering and discrete consine transform. We obtain 20 such coeffcients and average them for all the frames for a given audio sample to get feature vector of length 20. </p>
+<img class="mfcc" src="MFCC.png">
+<p><b>Delta MFCC</b>: Delta MFCC is calculated by taking a one-step difference of the MFCC coefficients along the time axis. We also then average them along the time-frames to get a 20 length feature vector. Delta MFCC help us in capturing the temporal relations of the MFCC coefficients. </p>
 
-<ol>
-  <li> <b> Mel-frequency cepstral coefficients (MFCC):</b> MFCC coefficients model the spectral energy distribution of the power spectrum of the audio and are obtained by using Fast Fourier Transform, Mel Scale filtering and discrete consine transform. We obtain 20 such coeffcients and average them for all the frames for a given audio sample to get feature vector of length 20. </li>
-  <li> <b> Delta MFCC:</b> Delta MFCC is calculated by taking a one-step difference of the MFCC coefficients along the time axis. We also then average them along the time-frames to get a 20 length feature vector. Delta MFCC help us in capturing the temporal relations of the MFCC coefficients. </li>
-  <li> <b> Chroma STFT: </b> Chroma-STFT compute a power spectrogram of the audio signal and project it onto 12 bins that represent 12 distinct tones of the musical octave. </li>
-  <li> <b> Spectral Contrast: </b> Spectral constrast captures relative spectral charecteristics and thus captures temporal information from the audio signal in 7 features.</li>
-  <li> <b> Tonnetz: </b>Tonnetz is a feature extraction technique to capture changing pitch in a given audio signal using 6 different filters. </li>
-  <li> <b> Melspectrogram: </b> Mel-frequency analysis of an audio signal is based on human perception and uses 128 filters to focus only on certain frequency components that are most distinct in detecting the underlying audio signal.</li>
-</ol>
+We also experimented with other features, but found that they do are not representative of speech waveforms, such as <b>Chroma STFT</b>, <b>Spectral Contrast</b>, <b>Tonnetz</b> and <b>Melspectrogram</b>.
 
-<p>We train multiple supervised and un-supervised machine learning models in order to understand the effectiveness of different models for accent classification. The features are also normalized to have a mean of 0 and standard deviation of 1 before being used to train the models. The data is also split in to a 80%-20% train-test split using stratified sampling to ensure equal distribution of each class in the train and test splits.</p>
-
-<p>We then compare the models by their accuracy in classifying each language and also provide some insights into how the data is distributed using dimensionality reduction techniques for better visualization. We also provide insights into which features are more important in classifying accents by analyzing the model parameters. All results and analysis can be found in <a href="#analysis">Results and Analysis</a>.</p>
+<p>We train <b>multiple supervised and un-supervised machine learning models</b> in order to understand the effectiveness of different models for accent classification. The features are also <b>normalized</b> to have a mean of 0 and standard deviation of 1 before being used to train the models. The data is also split in to a <b>80%-20% train-test split</b> using stratified sampling to ensure equal distribution of each class in the train and test splits. The trained models along with their hyperparamters are described in next section.</p>
 <h3>
 <a id="Experiments" class="anchor" href="#methodology" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Experiments</h3>
-<p>We train the models on different combinations of the metrics mentioned above in order to determine features that are most relevant for accent classification. Specifically, we train the models on the following combination of features:</p>
-
-<ol>
-  <li><b>Mel-frequency cepstral coefficients (MFCC):</b> As described in the previous section ,we only use the 20 dimensional feature vector for each audio signal since previous work in audio and accent classification has shown MFCC's to be a robust estimator of an audio signal</li>
-  <li><b>MFCC and Delta MFCC:</b> The 20 dimensional MFCC feature vector is calcualted by taking a mean of each coefficients along the time axis which leads to a loss of temporal information. We also use Delta MFCC to capture the temporal relation between the coefficients as well which gives a 40-D feature vector.</li>
-  <li><b>Combination of various features:</b> For this experiment, we combine all the features mentioned in the above section which gives a 173-D feature vector for each audio sample. Incorporating all these features allows the network to learn on the pitch, contrast and tonets of the underlying audio signal.</li>
-  <li><b>Images of MFCC:</b> We convert the MFCC features for a give audio signal to an image and train a Convolutional Neural Network on top of it. Deep Learning has seen an increased usage in a variety of tasks and we hope that the CNN will be able to capture subtle differences and changes in the MFCC coefficients over time. An example of an audio signal and its corresponding MFCC plot is shown below.</li>
-</ol>
-<img class="mfcc" src="combined.jpg" style="width:900px;height:300px;">
-
-<p>We train the following supervised and unsupervised machine learning models along with hyperparameter values (if non-default values used). We present the accuracy results for each approach but show the analysis only for the best one.</p>
-
-<ol>
-  <li><b>Unsupervised models: (Aakanksha can you add to this? Just write a line or two about what the model does in our case and any hyperparameter value if any)</b> Apart from using unsupervised models to train and predict accents of an input audio signal, we also use dimensionality reduction techniques like Principal Component Analysis (PCA) and Linear Discriminant Analysis (LDA) for visualizing our dataset and gaining insights into how the data is spread out.
-    <ol>
-      <li><b>K-Means Clustering:</b></li>
-      <li><b>Gaussian Mixture Models:</b></li>
-    </ol>
-  </li>
-
-  <li><b>Supervised models:</b> We use the ground-truth accent of the audio sample to train the supervised models. (Mentioning the we use default values now. Will update tomorrow with GridSearch results).
-    <ol>
-      <li><b>Support Vector Classifier:</b> Similar to Support Vector Machines but it perform one-vs-all classification for a multi-class problem like this. We use a Radial Basis Function (RBF) kernel for the kernel transformation.</li>
-      <li><b>Logistic Regression:</b> It is a variant of the linear regression but is uses the log-odds of a given class as the dependent variable. The coefficients of the model can be analyzed to undertand the magnitued and direction of impact of a given feature in classification.</li>
-      <li><b>K-Nearest Neighbours:</b>Assign an audio sample the majority class that exists among its 5 closest neighbouring audio samples in the Euclidean space.</li>
-      <li><b>Naive Bayes:</b> The likelihood of the features is assumed to be a Gaussian distribution and training involves learning the model paramters of mean and sigma for each Gaussian.</li>
-      <li><b>Decision Tree Classifier:</b>Predict class of a given audio sample by learning simple decision rules from training data. We use the deafult paramters while training the model.</li>
-      <li><b>Random Forest Classifier:</b>A group of decision trees, each fit on a subset of the data and use averaging to improve to improve accuracy and control over-fitting. We use the default value of 10 estimators (decision trees).</li>
-    </ol>
-  </li>
-</ol>
-
-<li>
-<b>Deep learning models:</b>
-
-</li>
-
-
+<p> All these experiments are carried out with different sets of parameters and datasets. To start out with, we used the top 9 accents, with just MFCC as the features and found that the results are not at par with the previous works. Below is our workflow for obtaining the different subset of data and features for our experiments!</p>
+<img class="process" src="process.png">
+<h4> K-Means and Gaussian Misture Model clustering </h4>
+<p>We used K-Means to cluster the speech samples, and visualize the structure of data samples. We use the sklearn KMeans library, and used Principal Component Analysis on the flattened MFCC and Delta MFCC features. All the plottings were done using Linear Discriminant Analysis(LDA).</p>
+<p> The clustering on top 3 samples, after using PCA and plotting on predicted labels looks like the following. </p>
+<img class="kpca" src="kmeans_pca.png">
+<p>Although, there are well-defined clusters for the predicted labels, the actual label plotting shows that the data is very spread out, and the clusering model is trying to cluster on only very specific parameters. This shows that our dataset has very minimal structure, which is captured on a very high level with clustering.</p>
+<img class="ktrue" src="kmeans_true.png">
+<p> Gaussian Mixture Model gives very similar results, reinforcing the minimal definition of structure of our data, as shown below. Left image is visualization with predicted labels, and right image is on true labels.</p>
+<div class="gmm">
+  <img class="gmmtrue" src="gmm_pca.png">
+  <img class="gmmtrue" src="gmm_true.png">
+</div>
+<h4> Support Vector Classifier </h4>
+<p> One-vs-all classification is used for a multi-class problem like this. We use a Radial Basis Function (RBF) kernel for the kernel transformation. The scores of our model is visualized as shown.</p>
+<img class="svc" src="SVC.png">
+<h4> Logistic Regression </h4>
+<p> It is a variant of the linear regression but is uses the log-probability of a given class as the dependent variable. The coefficients of the model can be analyzed to undertand the magnitude and direction of impact of a given feature in classification.
+The decision boundaries of top 3 acccents with the distribution of test data is shown below.</p>
+<img class="logreg" src="LogReg.png">
+<h4> K-Nearest Neighbours </h4>
+<p>Assign an audio sample the majority class that exists among its 5 closest neighbouring audio samples in the Euclidean space. Below is the graph for ther classifier, showing neighborhoods and classificsation.</p>
+<img class="knn" src="KNN.png">
+<h4>Naive Bayes</h4>
+<p>The likelihood of the features is assumed to be a Gaussian distribution and training involves learning the model paramters of mean and sigma for each Gaussian.</p>
+<img class="gnb" src="GNB.png">
+<h4> Decision Tree Classifier </h4>
+<p> Predict class of a given audio sample by learning simple decision rules from training data. We use the deafult paramters while training the model. The decision tree of our data is visualized as below.</p>
+<img class="dtree" src="decision_tree.png">
+<h4> Random Forest Classifier </h4>
+<p>A group of decision trees, each fit on a subset of the data and use averaging to improve to improve accuracy and control over-fitting. We use the default value of 10 estimators (decision trees).</p>
+<h4> Convolutional Neural Network </h4>
+<p> We convert the MFCC features for a give audio signal to an image and train a Convolutional Neural Network on top of it. Deep Learning has seen an increased usage in a variety of tasks and we hope that the CNN will be able to capture subtle differences and changes in the MFCC coefficients over time. Trained a shallow CNN on the MFCC images using a categorical cross entropy loss to capture the temporal changes in the MFCC coefficients.</p>
 <h3>
 <a id="analysis" class="anchor" href="#analysis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results and Analysis</h3>
 <p>Results about accuracy and analysis.</p>
