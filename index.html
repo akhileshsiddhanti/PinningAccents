@@ -53,24 +53,33 @@ We also experimented with other features, but found that they do are not represe
   <img class="gmmtrue" src="gmm_pca.png">
   <img class="gmmtrue" src="gmm_true.png">
 </div>
+
 <h4> Support Vector Classifier </h4>
 <p> One-vs-all classification is used for a multi-class problem like this. We use a Radial Basis Function (RBF) kernel for the kernel transformation. The scores of our model is visualized as shown.</p>
 <img class="svc" src="SVC.png">
+
 <h4> Logistic Regression </h4>
-<p> It is a variant of the linear regression but is uses the log-probability of a given class as the dependent variable. The coefficients of the model can be analyzed to undertand the magnitude and direction of impact of a given feature in classification.
-The decision boundaries of top 3 acccents with the distribution of test data is shown below.</p>
-<img class="logreg" src="LogReg.png">
+<p> We will now classify the dataset using Logistic Regression. The regression coefficients are trained on the delta MFCC of the top 3 accents,
+It is a variant of the linear regression but is uses the log-probability of a given class as the dependent variable. The coefficients of the model can be analyzed to understand the magnitude and direction of impact of a given feature in classification. The decision boundaries of top 3 accents with the distribution of test data is shown below.
+As we can see in the above plot, the English accents from Spanish and Arabic are linearly separable, while native English accent is not so linearly classifiable.
+</p>
+<img class="logreg" src="logistic_regression_plot.png">
+
 <h4> K-Nearest Neighbours </h4>
 <p>Assign an audio sample the majority class that exists among its 5 closest neighbouring audio samples in the Euclidean space. Below is the graph for ther classifier, showing neighborhoods and classificsation.</p>
 <img class="knn" src="KNN.png">
+
 <h4>Naive Bayes</h4>
 <p>The likelihood of the features is assumed to be a Gaussian distribution and training involves learning the model paramters of mean and sigma for each Gaussian.</p>
 <img class="gnb" src="GNB.png">
+
 <h4> Decision Tree Classifier </h4>
 <p> Predict class of a given audio sample by learning simple decision rules from training data. We use the deafult paramters while training the model. The decision tree of our data is visualized as below.</p>
 <img class="dtree" src="decision_tree.png">
+
 <h4> Random Forest Classifier </h4>
 <p>A group of decision trees, each fit on a subset of the data and use averaging to improve to improve accuracy and control over-fitting. We use the default value of 10 estimators (decision trees).</p>
+
 <h4> Convolutional Neural Network </h4>
 <p> We convert the MFCC features for a give audio signal to an image and train a Convolutional Neural Network on top of it. Deep Learning has seen an increased usage in a variety of tasks and we hope that the CNN will be able to capture subtle differences and changes in the MFCC coefficients over time. Trained a shallow CNN on the MFCC images using a categorical cross entropy loss to capture the temporal changes in the MFCC coefficients.</p>
 <h3>
