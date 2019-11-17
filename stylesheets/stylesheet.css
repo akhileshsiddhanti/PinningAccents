@@ -142,6 +142,21 @@ a {
     margin-right: auto;
     width: 120%;
   }
+  table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
 @media screen and (min-width: 64em) {
   .page-header {
     padding: 5rem 6rem; } }
