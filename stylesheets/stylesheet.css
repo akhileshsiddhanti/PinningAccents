@@ -56,7 +56,8 @@ a {
 .page-header {
   color: #fff;
   text-align: center;
-  background-image: url("world.jpg");
+  background-color: #159957;
+  background-image: linear-gradient(120deg, #155799, #159957);
   }
 
   .siri {
@@ -70,6 +71,76 @@ a {
     margin-left: auto;
     margin-right: auto;
     width: 60%;
+  }
+  .mfcc {
+    display: block;
+    margin-left: 25%;
+    margin-right: auto;
+    width: 60%;
+  }
+  .waveform {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+  }
+  .process {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  .kpca {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  .ktrue {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  .gmm::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  .gmmtrue {
+    float: left;
+    width: 50%;
+    padding: 5px;
+  }
+  .svc {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  .logreg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  .knn {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  .gnb {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  .dtree {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 120%;
   }
 @media screen and (min-width: 64em) {
   .page-header {
@@ -85,8 +156,7 @@ a {
 
 .project-name {
   margin-top: 0;
-  margin-bottom: 0.1rem;
-  background-color: black;}
+  margin-bottom: 0.1rem;}
 
 @media screen and (min-width: 64em) {
   .project-name {
@@ -102,8 +172,7 @@ a {
 
 .project-tagline {
   margin-bottom: 2rem;
-  font-weight: normal;
-  background-color: black;}
+  font-weight: normal;}
 
 @media screen and (min-width: 64em) {
   .project-tagline {

@@ -1,6 +1,14 @@
 import numpy as np
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import confusion_matrix
+import seaborn as sn
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+from sklearn.externals.six import StringIO
+from IPython.display import Image
+from sklearn.tree import export_graphviz
+import pydotplus
 
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -13,6 +21,9 @@ dataset = np.load('final_dataset_top3_delta.npy')
 X = dataset[:,:-1]
 y = dataset[:,-1]
 
+cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF'])
+cmap_bold = ListedColormap(['#FF0000', '#00FF00','#00AAFF'])
+
 few_english = np.random.permutation(np.argwhere(y==1))[:ENG_SIZE]
 
 Xf = np.vstack((X[few_english][:,0,:], X[y!=1]))
@@ -20,22 +31,37 @@ yf = np.hstack((y[few_english][:,0], y[y!=1]))
 
 x, xt, y, yt = train_test_split(Xf,yf,test_size=0.20,random_state=42,stratify=yf,shuffle=True)
 
-# # SVC
+# SVC
 # from sklearn.svm import SVC
-
-# parameters = {'C':[0.0001,0.001,0.01,0.1,1,10,100]}
+#
+# parameters = {'C':[0.0001,0.001,0.01,0.1,1,10,100], 'gamma':[1e-3, 1e-4]}
+# C = [0.0001,0.001,0.01,0.1,1,10,100]
+# Gammas = [1e-3, 1e-4]
 # svc = SVC(kernel='rbf')
-# clf = GridSearchCV(svc, parameters,cv=10,	 n_jobs=7)
+# clf = GridSearchCV(svc, parameters,cv=10,n_jobs=7)
 # clf.fit(x,y)
 # print("SVC Train:"+str(clf.score(x,y)))
 # print("SVC Test:"+str(clf.score(xt,yt)))
 # print("SVC Confusion Matrix:")
 # print(confusion_matrix(yt,clf.predict(xt)))
+# df_cm = pd.DataFrame(confusion_matrix(yt,clf.predict(xt)), range(3), range(3))
+#sn.set(font_scale=1.4)
+# sn.heatmap(df_cm, annot=True,annot_kws={"size": 10})
+# plt.show()
+# scores = clf.cv_results_['mean_test_score']
+# scores = np.array(scores).reshape(len(C), len(Gammas))
+# for ind, i in enumerate(C):
+#     plt.plot(Gammas, scores[ind], label='C: ' + str(i))
+# plt.legend()
+# plt.xlabel('Gamma')
+# plt.ylabel('Mean score')
+# plt.title("Score of SVC parameters")
+# plt.show()
 # print(clf.best_score_)
 # print(clf.best_params_)
 # print(svc.coef_)
 
-# # Logistic Regression
+# Logistic Regression
 # from sklearn.linear_model import LogisticRegression
 # lr = LogisticRegression().fit(x,y)
 # print("LogisticRegression Train:"+str(lr.score(x,y)))
@@ -43,24 +69,57 @@ x, xt, y, yt = train_test_split(Xf,yf,test_size=0.20,random_state=42,stratify=yf
 # print("LogisticRegression Confusion Matrix:")
 # print(confusion_matrix(yt,lr.predict(xt)))
 # print(lr.coef_)
+# points_x=[x/10. for x in range(-50,+50)]
+#
+# line_bias = lr.intercept_
+# line_w = lr.coef_.T
+# points_y=[(line_w[0]*x+line_bias)/(-1*line_w[1]) for x in points_x]
+# plt.plot(points_x, points_y)
+# plt.scatter(xt[:,0], xt[:,1],c=yt)
+# plt.title("Decision boundaries and test data")
+# plt.show()
 
-# # K Nearest Neighbours
+# K Nearest Neighbours
 # from sklearn.neighbors import KNeighborsClassifier
 # knn = KNeighborsClassifier(n_neighbors=15).fit(x,y)
 # print("KNN Train:"+str(knn.score(x,y)))
 # print("KNN Test:"+str(knn.score(xt,yt)))
 # print("KNN Confusion Matrix:")
 # print(confusion_matrix(yt,knn.predict(xt)))
+# x = x[:,:2]
+# x_min, x_max = x[:, 0].min() - 1, x[:, 0].max() + 1
+# y_min, y_max = x[:, 1].min() - 1, x[:, 1].max() + 1
+# xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.02),np.arange(y_min, y_max, 0.02))
+# # predict class using data and kNN classifier
+# Z = knn.predict(np.c_[xx.ravel(), yy.ravel()])
+#
+# # Put the result into a color plot
+# Z = Z.reshape(xx.shape)
+# plt.figure()
+# plt.pcolormesh(xx, yy, Z, cmap=cmap_light)
+#
+# # Plot also the training points
+# plt.scatter(x[:, 0], x[:, 1], c=y, cmap=cmap_bold)
+# plt.xlim(xx.min(), xx.max())
+# plt.ylim(yy.min(), yy.max())
+# plt.title("3-Class classification (k = %i)" % (15))
+# plt.show()
 
-# # Naive Bayes
+# Naive Bayes
 # from sklearn.naive_bayes import GaussianNB
 # gnb = GaussianNB().fit(x,y)
 # print("GNB Train:"+str(gnb.score(x,y)))
 # print("GNB Test:"+str(gnb.score(xt,yt)))
 # print("GNB Confusion Matrix:")
 # print(confusion_matrix(yt,gnb.predict(xt)))
+# plt.scatter(x[:, 0], x[:, 1], c=y, s=50, cmap='RdBu')
+# lim = plt.axis()
+# plt.scatter(xt[:, 0], xt[:, 1], c=yt, s=20, cmap='RdBu', alpha=0.1)
+# plt.axis(lim)
+# plt.title('Gaussian Naive Bayes classification')
+# plt.show()
 
-# # Decision Trees
+# Decision Trees
 # from sklearn.tree import DecisionTreeClassifier
 # dtc = DecisionTreeClassifier().fit(x,y)
 # print("DTC Train:"+str(dtc.score(x,y)))
@@ -68,18 +127,25 @@ x, xt, y, yt = train_test_split(Xf,yf,test_size=0.20,random_state=42,stratify=yf
 # print("DTC Confusion Matrix:")
 # print(confusion_matrix(yt,dtc.predict(xt)))
 # print(np.argsort(dtc.feature_importances_)[::-1][:5])
+# dot_data = StringIO()
+# export_graphviz(dtc, out_file=dot_data,
+#                 filled=True, rounded=True,
+#                 special_characters=True)
+# graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
+# graph.write_png('decision_tree.png')
+
 
 # # Random Forests
-from sklearn.ensemble import RandomForestClassifier
-
-parameters = {'n_estimators':[3,5,7,10,13,15,20,25], 'max_depth':[None,10,20,30,40,50]}
-rfc = RandomForestClassifier()
-clf = GridSearchCV(rfc, parameters,cv=10, n_jobs=7)
-clf.fit(x,y)
-print("RandomForestClassifier Train:"+str(clf.score(x,y)))
-print("RandomForestClassifier Test:"+str(clf.score(xt,yt)))
-print("Random Confusion Matrix:")
-print(confusion_matrix(yt,clf.predict(xt)))
-print(clf.best_params_)
-print(clf.best_score_)
-print(np.argsort(rfc.feature_importances_)[::-1][:5])
+# from sklearn.ensemble import RandomForestClassifier
+#
+# parameters = {'n_estimators':[3,5,7,10,13,15,20,25], 'max_depth':[None,10,20,30,40,50]}
+# rfc = RandomForestClassifier()
+# clf = GridSearchCV(rfc, parameters,cv=10, n_jobs=7)
+# clf.fit(x,y)
+# print("RandomForestClassifier Train:"+str(clf.score(x,y)))
+# print("RandomForestClassifier Test:"+str(clf.score(xt,yt)))
+# print("Random Confusion Matrix:")
+# print(confusion_matrix(yt,clf.predict(xt)))
+# print(clf.best_params_)
+# print(clf.best_score_)
+# print(np.argsort(rfc.feature_importances_)[::-1][:5])
