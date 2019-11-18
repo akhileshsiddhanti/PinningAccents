@@ -106,6 +106,8 @@ We also experimented with other features, but found that they do are not represe
 <p> Performance of both the algorithms is comparable, and it could be attributed to minimal structure in the data </p>
 <h4> Accuracy results and analysis </h4>
 <p>As mentioned in the previous section, we have experimented with a lot of feature combinations for our dataset, but found that a group of features that capture difference characteristics of the audio signal are representative of speech sample and give the best results. Here are the accuracy tables of <b>supervised learning models</b> for each of such combinations.</p>
+<p> We compare against a benchmark model which extracts 13 MFCC coefficients from the audio samples and learns a 2D-CNN on the image of MFCC coefficients over time. This model performs better than our approaches the superior performance can be attributed to their pre-processing where regions of zero amplitude (no sound) are removed so only the audio signals where words are spoken is captured which increases the models robustness to random distrubances in the audio.
+</p>
 <br>
 <table>
   <caption> MFCC </caption>
@@ -264,6 +266,13 @@ We also experimented with other features, but found that they do are not represe
     <td>0.73</td>
     <td>0.51</td>
     <td>0.35</td>
+  </tr>
+  <tr>
+    <td>Benchmark model</td>
+    <td>0.75</td>
+    <td>0.95</td>
+    <td>0.50</td>
+    <td>0.65</td>
   </tr>
 </table>
 

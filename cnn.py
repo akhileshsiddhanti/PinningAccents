@@ -47,8 +47,14 @@ crop_y = np.hstack((eng_y, no_eng_y))
 
 x, xt, y, yt = train_test_split(crop_data,crop_y,test_size=0.2, shuffle=True, stratify=crop_y, random_state=42)
 
+eng = (yt==1)
+spanish = (yt==2)
+arabic = (yt==0)
+
 y = to_categorical(y)
 yt = to_categorical(yt)	
+
+
 
 # Model
 model = Sequential()
@@ -56,19 +62,23 @@ model.add(Conv2D(32, (3,3), activation='relu', input_shape=data.shape[1:]))
 model.add(Conv2D(32, (3,3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
-model.add(Conv2D(64, (5,5), activation='relu'))
-model.add(Conv2D(64, (5,5), activation='relu'))
+model.add(Conv2D(32, (3,3), activation='relu'))
+model.add(Conv2D(32, (3,3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Flatten())
-model.add(Dense(128, activation='relu'))
+model.add(Dense(64, activation='relu'))
 
 model.add(Dense(3, activation='softmax'))
 model.compile(loss='categorical_crossentropy',optimizer='Adam',metrics=['accuracy'])
 
 print(model.summary())
 
-model.fit(x,y,epochs=2,batch_size=4, validation_split=0.15,shuffle=True)
+model.fit(x,y,epochs=10,batch_size=8,validation_split=0.15,shuffle=True)
 print(model.evaluate(x,y))
 print(model.evaluate(xt,yt))
-print(confusion_matrix(yt,np.argmax(model.predict(xt),axis=1)))
+print(model.evaluate(xt[eng],yt[eng]))
+print(model.evaluate(xt[spanish],yt[spanish]))
+print(model.evaluate(xt[arabic],yt[arabic]))
+print(yt)
+print(np.argmax(model.predict(xt),1))

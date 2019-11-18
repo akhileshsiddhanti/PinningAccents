@@ -1,0 +1,34 @@
+MFCC+Delta MFCC,,,,
+Model,Test Accuracy,English Accuracy,Spanish Accuracy,Arabic Accuracy
+Support Vector Classifier,0.53,0.67,0.54,0.3
+Logistic Regression,0.482,0.567,0.489,0.35
+K Nearest Neighbour,0.506,0.4,0.576,0.55
+Naive Bayes,0.47,0.6,0.21,0.7
+Decision Tree,0.45,0.53,0.42,0.35
+Random Forest,0.45,0.53,0.45,0.3
+Multi-layer perceptron,,,,
+,,,,
+,,,,
+MFCC ,,,,
+Model,Test Accuracy,English Accuracy,Spanish Accuracy,Arabic Accuracy
+Support Vector Classifier,0.51,0.63,0.52,0.35
+Logistic Regression,0.53,0.67,0.55,0.3
+K Nearest Neighbour,0.51,0.6,0.49,0.45
+Naive Bayes,0.42,0.6,0.12,0.65
+Decision Tree,0.42,0.4,0.49,0.35
+Random Forest,0.43,0.5,0.42,0.35
+Multi-layer perceptron,,,,
+,,,,
+,,,,
+All features,,,,
+Model,Test Accuracy,English Accuracy,Spanish Accuracy,Arabic Accuracy
+Support Vector Classifier,0.55,0.67,0.58,0.35
+Logistic Regression,0.59,0.63,0.58,0.55
+K Nearest Neighbour,0.6,0.6,0.67,0.5
+Naive Bayes,0.37,0.4,0.06,0.85
+Decision Tree,0.59,0.57,0.63,0.55
+Random Forest,0.55,0.73,0.51,0.35
+Multi-layer perceptron,,,,
+,,,,
+,,,,
+Trained a shallow CNN on the MFCC images using a categorical cross entropy loss to capture the temporal changes in the MFCC coefficients.<,,,,
