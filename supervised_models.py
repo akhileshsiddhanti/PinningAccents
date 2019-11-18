@@ -18,7 +18,7 @@ ENG_SIZE = 150
 np.random.seed(42)
 
 # Load the dataset
-dataset = np.load('final_dataset_top3_delta.npy')
+dataset = np.load('final_datasettop3.npy')
 X = dataset[:,:-1]
 y = dataset[:,-1]
 
@@ -32,27 +32,25 @@ yf = np.hstack((y[few_english][:,0], y[y!=1]))
 
 x, xt, y, yt = train_test_split(Xf,yf,test_size=0.20,random_state=42,stratify=yf,shuffle=True)
 
-# SVC
-from sklearn.svm import SVC
-
-parameters = {'C':[0.0001,0.001,0.01,0.1,1,10,100], 'gamma':[1e-3, 1e-4]}
-C = [0.0001,0.001,0.01,0.1,1,10,100]
-Gammas = [1e-3, 1e-4]
-svc = SVC(kernel='rbf')
-
-clf = GridSearchCV(svc, parameters,cv=10, n_jobs=7)
-clf.fit(x,y)
+# from sklearn.svm import SVC
+#
+# parameters = {'C':[0.0001,0.001,0.01,0.1,1,10,100], 'gamma':[1e-3, 1e-4]}
+# C = [0.0001,0.001,0.01,0.1,1,10,100]
+# Gammas = [1e-3, 1e-4]
+# svc = SVC(kernel='rbf')
+# clf = GridSearchCV(svc, parameters,cv=10,n_jobs=7)
+# clf.fit(x,y)
 # print("SVC Train:"+str(clf.score(x,y)))
 # print("SVC Test:"+str(clf.score(xt,yt)))
 # print("SVC Confusion Matrix:")
-# cm = (confusion_matrix(yt,clf.predict(xt)))
-# fig, ax = plot_confusion_matrix(conf_mat=cm)
-# plt.show()
-
-
-# df_cm = pd.DataFrame(confusion_matrix(yt,clf.predict(xt)), range(3), range(3))
-# sn.set(font_scale=1.4)
-# sn.heatmap(df_cm, annot=True,annot_kws={"size": 10})
+# print(confusion_matrix(yt,clf.predict(xt)))
+# cm = confusion_matrix(yt,clf.predict(xt))
+# plt.subplot()
+# sn.heatmap(cm, annot=True,fmt='g',cmap='Greens',square=True)
+# b, t = plt.ylim() # discover the values for bottom and top
+# b += 0.5 # Add 0.5 to the bottom
+# t -= 0.5 # Subtract 0.5 from the top
+# plt.ylim(b, t)
 # plt.show()
 # scores = clf.cv_results_['mean_test_score']
 # scores = np.array(scores).reshape(len(C), len(Gammas))
@@ -79,6 +77,14 @@ clf.fit(x,y)
 # print("LogisticRegression Test:"+str(lr.score(xt,yt)))
 # print("LogisticRegression Confusion Matrix:")
 # print(confusion_matrix(yt,lr.predict(xt)))
+# cm = confusion_matrix(yt,lr.predict(xt))
+# plt.subplot()
+# sn.heatmap(cm, annot=True,fmt='g',cmap='Greens',square=True)
+# b, t = plt.ylim() # discover the values for bottom and top
+# b += 0.5 # Add 0.5 to the bottom
+# t -= 0.5 # Subtract 0.5 from the top
+# plt.ylim(b, t)
+# plt.show()
 # print(lr.coef_)
 # print (yt)
 # points_x=[x/10. for x in range(-50,+50)]
@@ -132,6 +138,13 @@ clf.fit(x,y)
 # print("KNN Test:"+str(knn.score(xt,yt)))
 # print("KNN Confusion Matrix:")
 # print(confusion_matrix(yt,knn.predict(xt)))
+# plt.subplot()
+# sn.heatmap(confusion_matrix(yt,knn.predict(xt)), annot=True,fmt='g',cmap='Greens',square=True)
+# b, t = plt.ylim() # discover the values for bottom and top
+# b += 0.5 # Add 0.5 to the bottom
+# t -= 0.5 # Subtract 0.5 from the top
+# plt.ylim(b, t)
+# plt.show()
 # x = x[:,:2]
 # x_min, x_max = x[:, 0].min() - 1, x[:, 0].max() + 1
 # y_min, y_max = x[:, 1].min() - 1, x[:, 1].max() + 1
@@ -158,9 +171,16 @@ clf.fit(x,y)
 # print("GNB Test:"+str(gnb.score(xt,yt)))
 # print("GNB Confusion Matrix:")
 # print(confusion_matrix(yt,gnb.predict(xt)))
-# plt.scatter(x[:, 0], x[:, 1], c=y, s=50, cmap='RdBu')
+# # plt.subplot()
+# # sn.heatmap(confusion_matrix(yt,gnb.predict(xt)), annot=True,fmt='g',cmap='Greens',square=True)
+# # b, t = plt.ylim() # discover the values for bottom and top
+# # b += 0.5 # Add 0.5 to the bottom
+# # t -= 0.5 # Subtract 0.5 from the top
+# # plt.ylim(b, t)
+# # plt.show()
+# plt.scatter(x[:, 0], x[:, 1], c=y, s=50)
 # lim = plt.axis()
-# plt.scatter(xt[:, 0], xt[:, 1], c=yt, s=20, cmap='RdBu', alpha=0.1)
+# plt.scatter(xt[:, 0], xt[:, 1], c=yt, s=20)
 # plt.axis(lim)
 # plt.title('Gaussian Naive Bayes classification')
 # plt.show()
@@ -172,6 +192,13 @@ clf.fit(x,y)
 # print("DTC Test:"+str(dtc.score(xt,yt)))
 # print("DTC Confusion Matrix:")
 # print(confusion_matrix(yt,dtc.predict(xt)))
+# plt.subplot()
+# sn.heatmap(confusion_matrix(yt,dtc.predict(xt)), annot=True,fmt='g',cmap='Greens',square=True)
+# b, t = plt.ylim() # discover the values for bottom and top
+# b += 0.5 # Add 0.5 to the bottom
+# t -= 0.5 # Subtract 0.5 from the top
+# plt.ylim(b, t)
+# plt.show()
 # print(np.argsort(dtc.feature_importances_)[::-1][:5])
 # dot_data = StringIO()
 # export_graphviz(dtc, out_file=dot_data,
@@ -182,15 +209,22 @@ clf.fit(x,y)
 
 
 # # Random Forests
-# from sklearn.ensemble import RandomForestClassifier
-#
-# parameters = {'n_estimators':[3,5,7,10,13,15,20,25], 'max_depth':[None,10,20,30,40,50]}
-# rfc = RandomForestClassifier()
-# clf = GridSearchCV(rfc, parameters,cv=10, n_jobs=7)
-# clf.fit(x,y)
-# print("RandomForestClassifier Train:"+str(clf.score(x,y)))
-# print("RandomForestClassifier Test:"+str(clf.score(xt,yt)))
-# print("Random Confusion Matrix:")
+from sklearn.ensemble import RandomForestClassifier
+
+parameters = {'n_estimators':[3,5,7,10,13,15,20,25], 'max_depth':[None,10,20,30,40,50]}
+rfc = RandomForestClassifier()
+clf = GridSearchCV(rfc, parameters,cv=10, n_jobs=7)
+clf.fit(x,y)
+print("RandomForestClassifier Train:"+str(clf.score(x,y)))
+print("RandomForestClassifier Test:"+str(clf.score(xt,yt)))
+print("Random Confusion Matrix:")
+plt.subplot()
+sn.heatmap(confusion_matrix(yt,clf.predict(xt)), annot=True,fmt='g',cmap='Greens',square=True)
+b, t = plt.ylim() # discover the values for bottom and top
+b += 0.5 # Add 0.5 to the bottom
+t -= 0.5 # Subtract 0.5 from the top
+plt.ylim(b, t)
+plt.show()
 # print(confusion_matrix(yt,clf.predict(xt)))
 # print(clf.best_params_)
 # print(clf.best_score_)
