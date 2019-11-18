@@ -133,9 +133,10 @@ x, xt, y, yt = train_test_split(Xf,yf,test_size=0.20,random_state=42,stratify=yf
 
 # K Nearest Neighbours
 # from sklearn.neighbors import KNeighborsClassifier
+# x = x[:,:2]
 # knn = KNeighborsClassifier(n_neighbors=15).fit(x,y)
 # print("KNN Train:"+str(knn.score(x,y)))
-# print("KNN Test:"+str(knn.score(xt,yt)))
+# # print("KNN Test:"+str(knn.score(xt,yt)))
 # print("KNN Confusion Matrix:")
 # print(confusion_matrix(yt,knn.predict(xt)))
 # plt.subplot()
@@ -145,7 +146,7 @@ x, xt, y, yt = train_test_split(Xf,yf,test_size=0.20,random_state=42,stratify=yf
 # t -= 0.5 # Subtract 0.5 from the top
 # plt.ylim(b, t)
 # plt.show()
-# x = x[:,:2]
+
 # x_min, x_max = x[:, 0].min() - 1, x[:, 0].max() + 1
 # y_min, y_max = x[:, 1].min() - 1, x[:, 1].max() + 1
 # xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.02),np.arange(y_min, y_max, 0.02))
@@ -156,21 +157,22 @@ x, xt, y, yt = train_test_split(Xf,yf,test_size=0.20,random_state=42,stratify=yf
 # Z = Z.reshape(xx.shape)
 # plt.figure()
 # plt.pcolormesh(xx, yy, Z, cmap=cmap_light)
-#
 # # Plot also the training points
-# plt.scatter(x[:, 0], x[:, 1], c=y, cmap=cmap_bold)
+# ax = plt.scatter(x[:, 0], x[:, 1], c=y, cmap=cmap_bold)
+# classes = ['English', 'Spanish','Arabic']
+# plt.legend(handles=ax.legend_elements()[0], labels=classes)
 # plt.xlim(xx.min(), xx.max())
 # plt.ylim(yy.min(), yy.max())
 # plt.title("3-Class classification (k = %i)" % (15))
 # plt.show()
 
 # Naive Bayes
-# from sklearn.naive_bayes import GaussianNB
-# gnb = GaussianNB().fit(x,y)
-# print("GNB Train:"+str(gnb.score(x,y)))
-# print("GNB Test:"+str(gnb.score(xt,yt)))
-# print("GNB Confusion Matrix:")
-# print(confusion_matrix(yt,gnb.predict(xt)))
+from sklearn.naive_bayes import GaussianNB
+gnb = GaussianNB().fit(x,y)
+print("GNB Train:"+str(gnb.score(x,y)))
+print("GNB Test:"+str(gnb.score(xt,yt)))
+print("GNB Confusion Matrix:")
+print(confusion_matrix(yt,gnb.predict(xt)))
 # # plt.subplot()
 # # sn.heatmap(confusion_matrix(yt,gnb.predict(xt)), annot=True,fmt='g',cmap='Greens',square=True)
 # # b, t = plt.ylim() # discover the values for bottom and top
@@ -178,12 +180,14 @@ x, xt, y, yt = train_test_split(Xf,yf,test_size=0.20,random_state=42,stratify=yf
 # # t -= 0.5 # Subtract 0.5 from the top
 # # plt.ylim(b, t)
 # # plt.show()
-# plt.scatter(x[:, 0], x[:, 1], c=y, s=50)
-# lim = plt.axis()
-# plt.scatter(xt[:, 0], xt[:, 1], c=yt, s=20)
-# plt.axis(lim)
-# plt.title('Gaussian Naive Bayes classification')
-# plt.show()
+ax1 = plt.scatter(x[:, 0], x[:, 1], c=y, s=50)
+lim = plt.axis()
+ax2 = plt.scatter(xt[:, 0], xt[:, 1], c=yt, s=20)
+plt.axis(lim)
+classes = ['English', 'Spanish', 'Arabic']
+leg1 = plt.legend(handles=ax1.legend_elements()[0], labels=classes)
+plt.title('Gaussian Naive Bayes classification')
+plt.show()
 
 # Decision Trees
 # from sklearn.tree import DecisionTreeClassifier
@@ -209,22 +213,22 @@ x, xt, y, yt = train_test_split(Xf,yf,test_size=0.20,random_state=42,stratify=yf
 
 
 # # Random Forests
-from sklearn.ensemble import RandomForestClassifier
-
-parameters = {'n_estimators':[3,5,7,10,13,15,20,25], 'max_depth':[None,10,20,30,40,50]}
-rfc = RandomForestClassifier()
-clf = GridSearchCV(rfc, parameters,cv=10, n_jobs=7)
-clf.fit(x,y)
-print("RandomForestClassifier Train:"+str(clf.score(x,y)))
-print("RandomForestClassifier Test:"+str(clf.score(xt,yt)))
-print("Random Confusion Matrix:")
-plt.subplot()
-sn.heatmap(confusion_matrix(yt,clf.predict(xt)), annot=True,fmt='g',cmap='Greens',square=True)
-b, t = plt.ylim() # discover the values for bottom and top
-b += 0.5 # Add 0.5 to the bottom
-t -= 0.5 # Subtract 0.5 from the top
-plt.ylim(b, t)
-plt.show()
+# from sklearn.ensemble import RandomForestClassifier
+#
+# parameters = {'n_estimators':[3,5,7,10,13,15,20,25], 'max_depth':[None,10,20,30,40,50]}
+# rfc = RandomForestClassifier()
+# clf = GridSearchCV(rfc, parameters,cv=10, n_jobs=7)
+# clf.fit(x,y)
+# print("RandomForestClassifier Train:"+str(clf.score(x,y)))
+# print("RandomForestClassifier Test:"+str(clf.score(xt,yt)))
+# print("Random Confusion Matrix:")
+# plt.subplot()
+# sn.heatmap(confusion_matrix(yt,clf.predict(xt)), annot=True,fmt='g',cmap='Greens',square=True)
+# b, t = plt.ylim() # discover the values for bottom and top
+# b += 0.5 # Add 0.5 to the bottom
+# t -= 0.5 # Subtract 0.5 from the top
+# plt.ylim(b, t)
+# plt.show()
 # print(confusion_matrix(yt,clf.predict(xt)))
 # print(clf.best_params_)
 # print(clf.best_score_)
