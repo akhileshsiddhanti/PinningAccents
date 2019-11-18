@@ -9,7 +9,8 @@ from sklearn.externals.six import StringIO
 from IPython.display import Image
 from sklearn.tree import export_graphviz
 import pydotplus
-
+from mlxtend.plotting import plot_confusion_matrix
+from mlxtend.plotting import plot_decision_regions
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -63,6 +64,11 @@ x, xt, y, yt = train_test_split(Xf,yf,test_size=0.20,random_state=42,stratify=yf
 # print(clf.best_score_)
 # print(clf.best_params_)
 # print(svc.coef_)
+# fig = plt.figure(figsize=(10, 8))
+
+# fig = plot_decision_regions(X=xt.astype(np.integer), y=yt.astype(np.integer),clf=clf, legend=2)
+# plt.show()
+
 
 # Logistic Regression
 # from sklearn.linear_model import LogisticRegression
@@ -80,14 +86,49 @@ x, xt, y, yt = train_test_split(Xf,yf,test_size=0.20,random_state=42,stratify=yf
 # plt.ylim(b, t)
 # plt.show()
 # print(lr.coef_)
+# print (yt)
 # points_x=[x/10. for x in range(-50,+50)]
-#
+
+# x_min, x_max = xt[:, 0].min() - .5, xt[:, 0].max() + .5
+# y_min, y_max = xt[:, 1].min() - .5, xt[:, 1].max() + .5
+# h = .02 
+# xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+# Z = lr.predict(np.c_[xx.ravel(), yy.ravel(), np.zeros((yy.ravel().shape[0],38))])
+# Z = Z.reshape(xx.shape)
+
+# plt.pcolormesh(xx, yy, Z, cmap=plt.cm.Paired)
+
+
 # line_bias = lr.intercept_
 # line_w = lr.coef_.T
 # points_y=[(line_w[0]*x+line_bias)/(-1*line_w[1]) for x in points_x]
 # plt.plot(points_x, points_y)
-# plt.scatter(xt[:,0], xt[:,1],c=yt)
+# scatter = plt.scatter(xt[:,0], xt[:,1],c=yt, edgecolors='k', cmap=plt.cm.Paired)
+# plt.legend()
+# legend1 = plt.legend(handles=scatter.legend_elements()[0], labels = ['English','Spanish','Arabic'], loc="lower left", title="Classes")
+# ax.add_artist(legend1)
+# cm = (np.ones((3,3)))
+# df_cm = pd.DataFrame(cm, [1,2,3],[1,2,3])
+# sn.set(font_scale=1.0)
+# fig, ax = plt.subplots()
+# plt.figure(1, figsize=(3, 15))
+# fig, ax = plt.subplots(figsize=(4,4))         # Sample figsize in inchesfig = plt.gcf()  # or by other means, like plt.subplots
+# figsize = fig.get_size_inches()
+# fig.set_size_inches(figsize * 5) 
+# sn.heatmap(df_cm, annot=True, linewidths=.5, cbar=True)
+# legend2 = plt.legend(*scatter.legend_elements(),['a','b','c'])
 # plt.title("Decision boundaries and test data")
+# plt.xlabel('')
+# plt.ylabel('')
+# cm = confusion_matrix(yt,lr.predict(xt))
+# fig = plt.figure()
+# ax = fig.add_subplot(111)
+# cax = ax.matshow(cm)
+
+# fig, ax = plot_confusion_matrix(conf_mat=cm)
+# plt.show()
+
+# plt.tight_layout()
 # plt.show()
 
 # K Nearest Neighbours

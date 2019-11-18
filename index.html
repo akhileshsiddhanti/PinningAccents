@@ -62,6 +62,9 @@ We also experimented with other features, but found that they do are not represe
 <p> Logistic Regression is a variant of the linear regression but it uses the log-probability of a given class as the dependent variable. The regression coefficients can be analyzed to understand the magnitude and direction of impact of a given feature in classification. The decision boundaries of top 3 accents with the distribution of test data is shown below.As we can see in the below plot, the <b>English accents from Spanish and Arabic are linearly separable</b>, while native <b>English accent is not so linearly classifiable</b>.
 </p>
 <img class="logreg" src="logistic_regression_plot.png">
+<p>
+As we can see in the above plot, the English accents from Spanish and Arabic are linearly separable, while the native English accent is not so linearly classifiable.  
+</p>
 
 <h4> K-Nearest Neighbours </h4>
 <p>We assign an audio sample the majority class that exists among its 5 closest neighbouring audio samples in the Euclidean space. Below is the graph for ther classifier, showing neighborhoods and classificsation. Since the data is cluttered, the model is <b>not able to classify the central points effectively</b>, but is <b>capable of drawing boundaries for the points on the edges</b> as depicted in the below figure.</p>
@@ -73,10 +76,20 @@ We also experimented with other features, but found that they do are not represe
 
 <h4> Decision Tree Classifier </h4>
 <p> Decision trees involve predicting the class of a given audio sample by learning simple decision rules from training data. We use the deafult paramters of the model available in the scikit-learn library while training the model. The decision tree of our top 3 accents MFCC+Delta MFCC data is visualized as below.</p>
-<img class="dtree" src="decision_tree.png">
+<img class="dtree" src="decision_tree.png" width="120%" style="text-align: center; margin-left: -100px;">
 
 <h4> Random Forest Classifier </h4>
 <p>The random forest is a group of decision trees, each fit on a subset of the data and use averaging to improve to improve accuracy and control over-fitting. We use the default value of 10 estimators (decision trees) and use 10-fold cross validation to obtain the best set of trees in the forest.</p>
+
+<h4> Neural Networks</h4>
+<p>
+We test all the three datasets on Neural Networks. We use keras to implement our approach. We observe a heavy overfitting on the training data, which is shown by the graph below. We can observe that with each epoch, the training accuracy increases and the cross-validation continually accuracy falls for higher epochs. We also observe that by adding more layers, we witness overfitting again.
+</p>
+<img src="../PinningAccents/neural_epoch_plot.png" width="120%" style="text-align: center; margin-left: -100px;">
+<p>
+Hence, we use only a two layer neural network with a dropout layer. This allows us to gain better results.
+</p>
+
 
 <h4> Convolutional Neural Network </h4>
 <p> We convert the MFCC features for a give audio signal to an image and train a Convolutional Neural Network on top of it. Deep Learning has seen an increased usage in a variety of tasks and we hope that the CNN will be able to capture subtle differences and changes in the MFCC coefficients over time. We trained a <b>4 layer CNN of 32 3*3 filters at each layer and a 128 sized fully-connected layer using a categorical cross entropy loss</b>.</p>
