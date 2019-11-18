@@ -84,9 +84,30 @@ As we can see in the above plot, the English accents from Spanish and Arabic are
 <p> We convert the MFCC features for a give audio signal to an image and train a Convolutional Neural Network on top of it. Deep Learning has seen an increased usage in a variety of tasks and we hope that the CNN will be able to capture subtle differences and changes in the MFCC coefficients over time. Trained a shallow CNN on the MFCC images using a categorical cross entropy loss to capture the temporal changes in the MFCC coefficients.</p>
 <h3>
 <a id="analysis" class="anchor" href="#analysis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results and Analysis</h3>
+<h4> Clustering performance </h4>
+<p>We observed that clustering algorithms deduce the best structure with the MFCC+Delta MFCC features, as shown in previous section. We have used PCA on the feature set with two principal components.</p>
+<br>
+<table>
+  <caption> Clustering evaluation</caption>
+  <tr>
+    <th>Clustering Algorithm</th>
+    <th>V-Measure</th>
+    <th>Recovered variance for first PCA principal component</th>
+  </tr>
+  <tr>
+    <td>K-Means</td>
+    <td>0.034375228348756864</td>
+    <td>0.98633235</td>
+  </tr>
+  <tr>
+    <td>Gaussian Mixture Model</td>
+    <td>0.03646988561726508</td>
+    <td>0.98634451</td>
+  </tr>
+</table>
+<p> Performance of both the algorithms is comparable, and it could be attributed to minimal structure in the data </p>
 <h4> Accuracy results and analysis </h4>
-
-<p>As mentioned in the previous section, we have experimented with a lot of feature combinations for our dataset, but found that not all features are representative of speech sample. Here are the accuracy tables for each of such combinations.</p>
+<p>As mentioned in the previous section, we have experimented with a lot of feature combinations for our dataset, but found that not all features are representative of speech sample. Here are the accuracy tables of <b>supervised learning models</b> for each of such combinations.</p>
 <br>
 <table>
   <caption> MFCC+Delta MFCC</caption>
@@ -248,6 +269,75 @@ As we can see in the above plot, the English accents from Spanish and Arabic are
 </table>
 
 <p> According to these accuracy scores, we found that the <b>combination of all features gives us the best results</b>, in general, across all the accent classes. </p>
+
+<h4> Confusion Matrices for the best feature set </h4>
+<table width="500" border="1" cellpadding="5">
+<tr>
+  <td align="center" valign="center">
+
+  <img class = "svmcm" src="svm_cm.png"/>
+  </td>
+
+  <td align="center" valign="center">
+  <b>Support Vector Classifier</b>
+  </td>
+</tr>
+<tr>
+  <td align="center" valign="center">
+
+  <img class = "svmcm" src="logreg_cm.png"/>
+  </td>
+
+  <td align="center" valign="center">
+  <b>Logistic Regression</b>
+  </td>
+</tr>
+<tr>
+  <td align="center" valign="center">
+
+  <img class = "svmcm" src="knn_cm.png"/>
+  </td>
+
+  <td align="center" valign="center">
+  <b>K- Nearest Neighbour</b>
+  </td>
+</tr>
+<tr>
+  <td align="center" valign="center">
+
+  <img class = "svmcm" src="naive_cm.png"/>
+  </td>
+
+  <td align="center" valign="center">
+  <b>Naive Bayes</b>
+  </td>
+</tr>
+<tr>
+  <td align="center" valign="center">
+
+  <img class = "svmcm" src="decision_cm.png"/>
+  </td>
+
+  <td align="center" valign="center">
+  <b>Decision Tree</b>
+  </td>
+</tr>
+<tr>
+  <td align="center" valign="center">
+
+  <img class = "svmcm" src="random_cm.png"/>
+  </td>
+
+  <td align="center" valign="center">
+  <b>Random Forest</b>
+  </td>
+</tr>
+</table>
+<h3>
+<a id="Experiments" class="anchor" href="#methodology" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>References</h3>
+
+
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.gatech.edu/sratnam6/sratnam6.github.io">Pinning Accents: A Study on Accent Classifiers </a> is maintained by <a href="https://github.gatech.edu/sratnam6">sratnam6</a>.</span>
 
