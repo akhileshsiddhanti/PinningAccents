@@ -225,6 +225,13 @@ Hence, we use only a two layer neural network with a dropout layer. This allows 
     <td>0.45</td>
     <td>0.3</td>
   </tr>
+  <tr>
+      <td>Artificial Neural Networks</td>
+      <td>0.68</td>
+      <td>0.1</td>
+      <td>0.68</td>
+      <td>0.1</td>
+    </tr>
 </table>
 <br>
 <table>
@@ -285,8 +292,9 @@ Hence, we use only a two layer neural network with a dropout layer. This allows 
 <h4> Confusion Matrices for the best feature set </h4>
 <p> Below are the confusion matrix for each supervised algorithm when trained on the combination of all features. We can make two important observations:</p>
 <ol>
-  <li>Accuracy and confusion matrix go hand in hand so we notice the confusion matrix for logistic regression and K-Nearest Neighbours having the best confusion matrix with <b>all entries along the diagonal having high values indicating good recall and precission</b>.</li>
+  <li>Accuracy and confusion matrix go hand in hand so we notice the confusion matrix for logistic regression and K-Nearest Neighbours having the best confusion matrix with <b>all entries along the diagonal having high values, indicating good recall and precision</b>.</li>
   <li>Naive Bayes performs very poorly and the model <b>misclassifies most samples</b>. This can be attributed to the fact that since the data is inter-mixed, <b>adding more features did not separate the data</b> and thus the model failed to learn the underlying Gaussian distribution parameters.</li>
+  <li>Neural Networks heavily over-fit on the dataset and hence despite high accuracy for English the accuracy is low for Spanish and Arabic.</li>
 </ol>
 
 <table width="500" border="1" cellpadding="5">
@@ -350,6 +358,16 @@ Hence, we use only a two layer neural network with a dropout layer. This allows 
   <b>Random Forest</b>
   </td>
 </tr>
+<tr>
+    <td align="center" valign="center">
+  
+    <img class = "svmcm" src="../PinningAccents/supervised.png"/>
+    </td>
+  
+    <td align="center" valign="center">
+    <b>Artificial Neural Networks</b>
+    </td>
+  </tr>
 </table>
 <h3>
 <a id="Experiments" class="anchor" href="#methodology" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>References</h3>
