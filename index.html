@@ -270,7 +270,12 @@ We also experimented with other features, but found that they do are not represe
 <p> According to these accuracy scores, we found that the <b>combination of all features gives us the best results except for Naive Bayes</b> since adding features did not improve the data separation, in general, across all the accent classes. </p>
 
 <h4> Confusion Matrices for the best feature set </h4>
-<p> Below are the confusion matrix for each supervised algorithm when trained on the combination of all features.</p>
+<p> Below are the confusion matrix for each supervised algorithm when trained on the combination of all features. We can make two important observations:</p>
+<ol>
+  <li>Accuracy and confusion matrix go hand in hand so we notice the confusion matrix for logistic regression and K-Nearest Neighbours having the best confusion matrix with <b>all entries along the diagonal having high values indicating good recall and precission</b>.</li>
+  <li>Naive Bayes performs very poorly and the model <b>misclassifies most samples</b>. This can be attributed to the fact that since the data is inter-mixed, <b>adding more features did not separate the data</b> and thus the model failed to learn the underlying Gaussian distribution parameters.</li>
+</ol>
+
 <table width="500" border="1" cellpadding="5">
 <tr>
   <td align="center" valign="center">
