@@ -76,7 +76,7 @@ As we can see in the above plot, the English accents from Spanish and Arabic are
 
 <h4> Decision Tree Classifier </h4>
 <p> Decision trees involve predicting the class of a given audio sample by learning simple decision rules from training data. We use the deafult paramters of the model available in the scikit-learn library while training the model. The decision tree of our top 3 accents MFCC+Delta MFCC data is visualized as below.</p>
-<img class="dtree" src="decision_tree.png">
+<img class="dtree" src="decision_tree.png" width="120%" style="text-align: center; margin-left: -100px;">
 
 <h4> Random Forest Classifier </h4>
 <p>The random forest is a group of decision trees, each fit on a subset of the data and use averaging to improve to improve accuracy and control over-fitting. We use the default value of 10 estimators (decision trees) and use 10-fold cross validation to obtain the best set of trees in the forest.</p>
@@ -84,9 +84,9 @@ As we can see in the above plot, the English accents from Spanish and Arabic are
 <h4> Neural Networks</h4>
 <p>
 We test all the three datasets on Neural Networks. We use keras to implement our approach. We observe a heavy overfitting on the training data, which is shown by the graph below. We can observe that with each epoch, the training accuracy increases and the cross-validation continually accuracy falls for higher epochs. We also observe that by adding more layers, we witness overfitting again.
-
-<img src="../PinningAccents/neural_epoch_plot.png">
-
+</p>
+<img src="../PinningAccents/neural_epoch_plot.png" width="120%" style="text-align: center; margin-left: -100px;">
+<p>
 Hence, we use only a two layer neural network with a dropout layer. This allows us to gain better results.
 </p>
 
