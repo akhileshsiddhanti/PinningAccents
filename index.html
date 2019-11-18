@@ -59,11 +59,12 @@ We also experimented with other features, but found that they do are not represe
 <img class="svc" src="SVC.png">
 
 <h4> Logistic Regression </h4>
-<p> We will now classify the dataset using Logistic Regression. The regression coefficients are trained on the delta MFCC of the top 3 accents,
-It is a variant of the linear regression but is uses the log-probability of a given class as the dependent variable. The coefficients of the model can be analyzed to understand the magnitude and direction of impact of a given feature in classification. The decision boundaries of top 3 accents with the distribution of test data is shown below.
-As we can see in the above plot, the English accents from Spanish and Arabic are linearly separable, while native English accent is not so linearly classifiable.
+<p> We will now classify the dataset using Logistic Regression. The regression coefficients are trained on the delta MFCC of the top 3 accents, and then these weights are used to predict the test set. The coefficients of the model can be analyzed to understand the magnitude and direction of impact of a given feature in classification. The decision boundaries of top 3 accents with the distribution of test data is shown below.
 </p>
 <img class="logreg" src="logistic_regression_plot.png">
+<p>
+As we can see in the above plot, the English accents from Spanish and Arabic are linearly separable, while the native English accent is not so linearly classifiable.  
+</p>
 
 <h4> K-Nearest Neighbours </h4>
 <p>Assign an audio sample the majority class that exists among its 5 closest neighbouring audio samples in the Euclidean space. Below is the graph for ther classifier, showing neighborhoods and classificsation.</p>
